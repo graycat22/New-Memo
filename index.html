@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Memo App</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #2196F3;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .memo {
+            width: 100%;
+            max-width: 500px;
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .memo:focus {
+            border-color: #2196F3;
+            outline: none;
+        }
+        .add-btn {
+            background-color: #2196F3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .add-btn:hover {
+            background-color: #0D47A1;
+        }
+        .delete-btn {
+            background-color: #E91E63;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .delete-btn:hover {
+            background-color: #880E4F;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Memo App</h1>
+    </div>
+    <div class="container">
+        <div id="memo-container"></div>
+        <button id="add-btn" class="add-btn">Add Memo</button>
+    </div>
+    <script>
+        const memoContainer = document.getElementById("memo-container");
+        const addBtn = document.getElementById("add-btn");
+        let memoCount = 0;
+
+        function createMemo() {
+            memoCount++;
+            const memo = document.createElement("textarea");
+            memo.className = "memo";
+            memo.placeholder = "Enter memo text here...";
+            memoContainer.insertBefore(memo, addBtn);
+        }
+
+        function deleteMemo() {
+            if (memoCount > 0) {
+                const memos = document.getElementsByClassName("memo");
+                const memo = memos[memos.length - 1];
+                memoContainer.removeChild(memo);
+                memoCount--;
+            }
+        }
+
+        addBtn.addEventListener("click", createMemo);
+
+        memoContainer.addEventListener("click", function(e) {
+            if (e.target && e.target.className == "delete-btn") {
+                deleteMemo();
+            }
+        });
+
+        memoContainer.addEventListener("keydown", function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                createMemo();
+            }
+        });
+    </script>
+</body>
+</html>
